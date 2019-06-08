@@ -1,28 +1,30 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import firebase from './src/firebase_connection'
+import {StackNavigation} from 'react-navigation'
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware} from 'redux'
+import {ReduxThunk} from 'redux-thunk'
+
+import Reducers from './src/Reducers'
+import Preload from './src/Preload'
+import Home from './src/Home'
+
+let store =  createStore(Reducers,applyMiddleware(ReduxThunk));
+
+const Navigator = StackNavigation({
+  Preload:{
+    screen: Preload
+  },
+  Home:{
+    screen: Home
+  }
+});
 
 export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to WhatsApp!</Text>
-      </View>
+      <Provider>
+        <Navigator/>
+      </Provider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-
-});
