@@ -1,10 +1,11 @@
 import firebase from '../firebase_connection'
 
+
 export const checkLogin = () => {
 
 	return (dispatch) => {
 
-		let user = 'danilo'
+        let user = firebase.auth().CurrentUser;
 
 		if(user) {
 			dispatch({
@@ -17,7 +18,7 @@ export const checkLogin = () => {
 			dispatch({
 				type:'changeStatus',
 				payload:{
-					status:0
+					status:2
 				}
 			});
 		}
