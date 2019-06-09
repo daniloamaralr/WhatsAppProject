@@ -1,29 +1,31 @@
 import React, {Component} from 'react';
-import {StackNavigation} from 'react-navigation'
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from 'redux'
-import {ReduxThunk} from 'redux-thunk'
+import ReduxThunk from 'redux-thunk'
 
-import Reducers from './src/Reducers'
+import Reducers from './src/reducers'
 import Preload from './src/Preload'
-import Home from './src/Home'
+//import Home from './src/Home'
 
 let store =  createStore(Reducers,applyMiddleware(ReduxThunk));
 
-const Navigator = StackNavigation({
+const Navigator = createStackNavigator({
   Preload:{
     screen: Preload
-  },
-  Home:{
-    screen: Home
   }
+/*   Home:{
+    screen: Home
+  } */
 });
+
+const AppContainer = createAppContainer(Navigator)  
 
 export default class App extends Component {
   render() {
     return (
-      <Provider>
-        <Navigator/>
+      <Provider store={store}>
+        <AppContainer/>
       </Provider>
     );
   }
